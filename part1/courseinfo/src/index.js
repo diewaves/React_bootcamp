@@ -9,6 +9,28 @@ const Title = (props) => {
   return <h1>{props.course}</h1>;
 };
 
+const Part = (props) => {
+  return (
+    <p>
+      {props.parte} {props.number}
+    </p>
+  );
+};
+
+const Content = (props) => {
+  return (
+    <div>
+      <Part parte={props.part[0]} number={props.exercises[0]} />
+      <Part parte={props.part[1]} number={props.exercises[1]} />
+      <Part parte={props.part[2]} number={props.exercises[2]} />
+    </div>
+  );
+};
+
+const Total = (props) => {
+  return <p>Number of exercises {props.exercises}</p>;
+};
+
 const App = () => {
   const course = 'Half Stack application development';
   const part1 = 'Fundamentals of React';
@@ -19,18 +41,11 @@ const App = () => {
   const exercises3 = 14;
 
   return (
+    //Enviamos la info a través de arrays para el content
     <div>
       <Title course={course} />
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      <Content part={[part1, part2, part3]} exercises={[exercises1, exercises2, exercises3]} />
+      <Total exercises={exercises1 + exercises2 + exercises3} />
     </div>
   );
 };
