@@ -7,26 +7,40 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
+  // const [clicks, setClicks] = userState([]); // Estado para el total de clicks
+
   //Función que actualiza el valor y renderizado del valor good
-  const clickGood = () => {
-    setGood((prevContador) => {
-      return prevContador + 1;
+  const clickGood = (e) => {
+    setGood((prevClick) => {
+      return prevClick + 1;
     });
   };
 
-  //Función que actualiza el valor y renderizado del valor good
+  //Función que actualiza el valor y renderizado del valor neutral
   const clickNeutral = () => {
-    setNeutral((prevContador) => {
-      return prevContador + 1;
+    setNeutral((prevClick) => {
+      return prevClick + 1;
+    });
+    // setClicks((prevClicks) => [...prevClicks, 'G']); //Total de clicks al que se añade al array una letra según el botón
+  };
+
+  //Función que actualiza el valor y renderizado del valor bad
+  const clickBad = () => {
+    setBad((prevClick) => {
+      return prevClick + 1;
     });
   };
 
-  //Función que actualiza el valor y renderizado del valor good
-  const clickBad = () => {
-    setBad((prevContador) => {
-      return prevContador + 1;
-    });
-  };
+  //Declaramos la constante con el total y las variables para los cálculos
+  const all = good + neutral + bad;
+  let average = 0;
+  let positive = 0;
+
+  //Si hay registros se calculan las medias
+  if (all !== 0) {
+    average = (good - bad) / all;
+    positive = (good / all) * 100;
+  }
 
   //Renderizado de App
   return (
@@ -40,6 +54,9 @@ const App = () => {
       <p>Good: {good}</p>
       <p>Neutral: {neutral}</p>
       <p>Bad: {bad}</p>
+      <p>All: {all}</p>
+      <p>Average: {average}</p>
+      <p>Positive: {positive} %</p>
     </div>
   );
 };
