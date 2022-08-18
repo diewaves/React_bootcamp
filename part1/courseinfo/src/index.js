@@ -18,6 +18,7 @@ const Part = (props) => {
 };
 
 const Content = (props) => {
+  //Recibimos la información del array
   return (
     <div>
       <Part parte={props.part[0]} number={props.exercises[0]} />
