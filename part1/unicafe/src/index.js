@@ -1,6 +1,28 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+const Statistics = (props) => {
+  //Declaramos la constante con el total y las variables para los cálculos
+  const all = props.good + props.neutral + props.bad;
+  let average = 0;
+  let positive = 0;
 
+  //Si hay registros se calculan las medias
+  if (all !== 0) {
+    average = (props.good - props.bad) / all;
+    positive = (props.good / all) * 100;
+  }
+  return (
+    <div className='Statistics'>
+      <h2>Statistics</h2>
+      <p>Good: {props.good}</p>
+      <p>Neutral: {props.neutral}</p>
+      <p>Bad: {props.bad}</p>
+      <p>All: {all}</p>
+      <p>Average: {average}</p>
+      <p>Positive: {positive} %</p>
+    </div>
+  );
+};
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0);
@@ -31,32 +53,15 @@ const App = () => {
     });
   };
 
-  //Declaramos la constante con el total y las variables para los cálculos
-  const all = good + neutral + bad;
-  let average = 0;
-  let positive = 0;
-
-  //Si hay registros se calculan las medias
-  if (all !== 0) {
-    average = (good - bad) / all;
-    positive = (good / all) * 100;
-  }
-
   //Renderizado de App
+  //Recuerda siempre pasar las props al componente menor
   return (
     <div className='App'>
       <h1>Give Feedback</h1>
       <button onClick={clickGood}>Good</button>
       <button onClick={clickNeutral}>Neutral</button>
       <button onClick={clickBad}>Bad</button>
-
-      <h2>Statistics</h2>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>All: {all}</p>
-      <p>Average: {average}</p>
-      <p>Positive: {positive} %</p>
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };
