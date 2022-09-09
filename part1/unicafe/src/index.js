@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'; // Upgrade to React 18 use instead ReactDOM
+const container = document.getElementById('root');
+const root = createRoot(container); // Upgrade to React 18
+
+//Componente del botón al que le pasamos el texto y la función de click
+const Button = (props) => {
+  return <button onClick={props.handleClick}>{props.text}</button>;
+};
+
+const Statistic = (props) => {
+  return (
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
+  );
+};
+
 const Statistics = (props) => {
   //Declaramos la constante con el total y las variables para los cálculos
   const all = props.good + props.neutral + props.bad;
@@ -13,17 +30,20 @@ const Statistics = (props) => {
   }
   return (
     <div className='Statistics'>
-      <p>Good: {props.good}</p>
-      <p>Neutral: {props.neutral}</p>
-      <p>Bad: {props.bad}</p>
-      <p>All: {all}</p>
-      <p>Average: {average}</p>
-      <p>Positive: {positive} %</p>
+      <table>
+        <tbody>
+          <Statistic text='good' value={props.good}></Statistic>
+          <Statistic text='neutral' value={props.neutral}></Statistic>
+          <Statistic text='bad' value={props.bad}></Statistic>
+          <Statistic text='all' value={all}></Statistic>
+          <Statistic text='average' value={average}></Statistic>
+          <Statistic text='positive' value={positive}></Statistic>
+        </tbody>
+      </table>
     </div>
   );
 };
 const App = () => {
-  // save clicks of each button to its own state
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
@@ -52,18 +72,22 @@ const App = () => {
     });
   };
 
+  //Para pasarle una función directa se haría así
+  // <button onClick={clickGood}>Good</button>
+
   //Renderizado de App
   //Recuerda siempre pasar las props al componente menor
+  // Metemos un condicional ternario para evaluar si hay estadísitcas
   return (
     <div className='App'>
       <h1>Give Feedback</h1>
-      <button onClick={clickGood}>Good</button>
-      <button onClick={clickNeutral}>Neutral</button>
-      <button onClick={clickBad}>Bad</button>
+      <Button handleClick={() => clickGood()} text='Good'></Button>
+      <Button handleClick={() => clickNeutral()} text='Neutral'></Button>
+      <Button handleClick={() => clickBad()} text='Bad'></Button>
       <h2>Statistics</h2>
       <div>{good + neutral + bad === 0 ? 'No feedback is given' : <Statistics good={good} neutral={neutral} bad={bad} />}</div>
     </div>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+root.render(<App />); // Upgrade to React 18 se instead ReactDOM
